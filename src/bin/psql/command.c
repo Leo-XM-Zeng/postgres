@@ -2505,7 +2505,7 @@ exec_command_sf_sv(PsqlScanState scan_state, bool active_branch,
 
 		buf = createPQExpBuffer();
 		obj_desc = psql_scan_slash_option(scan_state,
-										  OT_WHOLE_LINE, NULL, true);
+										  OT_NORMAL, NULL, true);
 		if (!obj_desc)
 		{
 			if (is_func)

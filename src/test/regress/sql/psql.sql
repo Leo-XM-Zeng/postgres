@@ -1824,6 +1824,32 @@ DROP FUNCTION psql_error;
 \dT "no.such.database"."no.such.schema"."no.such.data.type"
 \dX "no.such.database"."no.such.schema"."no.such.extended.statistics"
 
+-- check \df; \df and \sf \sf; \sf+;
+CREATE PROCEDURE psql_protest()
+AS $$
+BEGIN
+null;
+END;$$ LANGUAGE plpgsql;
+
+\df psql_protest
+\df psql_protest;
+\sf psql_protest
+\sf psql_protest;
+\sf+ psql_protest; 
+DROP PROCEDURE psql_protest;
+
+-- check \dt \dt; \sv \sv; \sv+;
+CREATE TABLE bla(s TEXT);  
+CREATE VIEW v_bla AS SELECT * FROM bla;
+
+\dt bla
+\dt bla;
+\sv v_bla
+\sv v_bla;
+\sv+ v_bla;
+DROP VIEW v_bla;
+DROP TABLE bla;
+
 -- check \drg and \du
 CREATE ROLE regress_du_role0;
 CREATE ROLE regress_du_role1;

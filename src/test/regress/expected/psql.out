@@ -6618,6 +6618,79 @@ cross-database references are not implemented: "no.such.database"."no.such.schem
 cross-database references are not implemented: "no.such.database"."no.such.schema"."no.such.data.type"
 \dX "no.such.database"."no.such.schema"."no.such.extended.statistics"
 cross-database references are not implemented: "no.such.database"."no.such.schema"."no.such.extended.statistics"
+-- check \df; \df and \sf \sf; \sf+;
+CREATE PROCEDURE psql_protest()
+AS $$
+BEGIN
+null;
+END;$$ LANGUAGE plpgsql;
+\df psql_protest
+                           List of functions
+ Schema |     Name     | Result data type | Argument data types | Type 
+--------+--------------+------------------+---------------------+------
+ public | psql_protest |                  |                     | proc
+(1 row)
+
+\df psql_protest;
+                           List of functions
+ Schema |     Name     | Result data type | Argument data types | Type 
+--------+--------------+------------------+---------------------+------
+ public | psql_protest |                  |                     | proc
+(1 row)
+
+\sf psql_protest
+CREATE OR REPLACE PROCEDURE public.psql_protest()
+ LANGUAGE plpgsql
+AS $procedure$
+BEGIN
+null;
+END;$procedure$
+\sf psql_protest;
+CREATE OR REPLACE PROCEDURE public.psql_protest()
+ LANGUAGE plpgsql
+AS $procedure$
+BEGIN
+null;
+END;$procedure$
+\sf+ psql_protest; 
+        CREATE OR REPLACE PROCEDURE public.psql_protest()
+         LANGUAGE plpgsql
+1       AS $procedure$
+2       BEGIN
+3       null;
+4       END;$procedure$
+DROP PROCEDURE psql_protest;
+-- check \dt \dt; \sv \sv; \sv+;
+CREATE TABLE bla(s TEXT);  
+CREATE VIEW v_bla AS SELECT * FROM bla;
+\dt bla
+        List of relations
+ Schema | Name | Type  |  Owner   
+--------+------+-------+----------
+ public | bla  | table | postgres
+(1 row)
+
+\dt bla;
+        List of relations
+ Schema | Name | Type  |  Owner   
+--------+------+-------+----------
+ public | bla  | table | postgres
+(1 row)
+
+\sv v_bla
+CREATE OR REPLACE VIEW public.v_bla AS
+ SELECT s
+   FROM bla
+\sv v_bla;
+CREATE OR REPLACE VIEW public.v_bla AS
+ SELECT s
+   FROM bla
+\sv+ v_bla;
+1       CREATE OR REPLACE VIEW public.v_bla AS
+2        SELECT s
+3          FROM bla
+DROP VIEW v_bla;
+DROP TABLE bla;
 -- check \drg and \du
 CREATE ROLE regress_du_role0;
 CREATE ROLE regress_du_role1;
